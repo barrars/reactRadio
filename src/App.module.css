@@ -1,0 +1,18 @@
+.App {
+  text-align: center;
+}
+
+.red {
+  color: red;
+}
+
+.bold {
+  font-weight: bold;
+}
+div{
+  /* background-color: chartreuse; */
+}
+
+.cheek{
+  background: orange;
+}

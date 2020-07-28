@@ -1,0 +1,13 @@
+{
+  "folders": [
+    {
+      "name": "cra-base",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "terminal.integrated.cwd": "${workspaceFolder}"
+    // "terminal.integrated.cwd": "${fileDirname}"
+  }
+
+}
