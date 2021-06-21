@@ -4,21 +4,11 @@
  *
  * @param {LocalForage} myDB
  */
-export default function getSongList (setSongList, myDB ) {
+export default function getSongList (setSongList ) {
   // fetch('http://localhost:3001/songlist')
   fetch('https://chat-radio.com/songlist')
     .then(res => {
       console.log(res)
-
-      if (!res.ok) {
-        myDB.keys()
-        .then(keys=>{
-          setSongList(keys)
-        })
-        console.log('return?')
-        setSongList('err')
-        throw new Response({ok:false})
-      }
       console.log('res?')
       setSongList('done')
       res.json()
