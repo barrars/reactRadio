@@ -9,6 +9,7 @@ export default function getSongList (setSongList, myDB ) {
   fetch('https://chat-radio.com/songlist')
     .then(res => {
       console.log(res)
+
       if (!res.ok) {
         myDB.keys()
         .then(keys=>{

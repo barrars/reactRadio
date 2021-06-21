@@ -6,8 +6,9 @@ import { mainStore } from '../helpers/mainStore'
 
 export default function SongList() {
   useEffect(() => { getSonglist(setSongList) }, [])
-  useEffect(() => {mainStore.keys().then(keys => {
-    console.log('main store ' , keys)
+  useEffect(() => {
+    mainStore.keys().then(keys => {
+      console.log('main store ', keys)
       setCachedSongs(keys)
     })
   }, [])
@@ -37,15 +38,15 @@ export default function SongList() {
   console.log('cached songs: ', cachedSongs)
   console.log('songlist: ', songList)
 
-  if (songList === 'fetching' || songList === 'done' || cachedSongs==='fetching') {
+  if (songList === 'fetching' || songList === 'done' || cachedSongs === 'fetching') {
     return (
       <p>Trying to Fetch Songs.....</p>
     )
-  } else if (songList === 'err' && cachedSongs.length>0) {
+  } else if (songList === 'err' /* && cachedSongs.length > 0 */) {
     console.log('offline!!')
     return (
       <div>
-        {cachedSongs.map((song, i) => {
+        {cachedSongs.length > 0 && cachedSongs.map((song, i) => {
           return (
             <div key={i}>
               <Song name={song} />
@@ -53,6 +54,7 @@ export default function SongList() {
             </div>
           )
         })}
+        {cachedSongs.length === 0 && <p>you didnt save any songs for offline play!</p>}
         {offlineAudio}
       </div>
     )
@@ -62,18 +64,20 @@ export default function SongList() {
       <div>
         <div>
           {songList.map((song, i) => {
-            return song.deleted ? null :
-              <div key={song.fileSlug}>
-                <Song name={song.fileName} click={songClickHandler} />
-                {cachedSongs.includes(song.fileName)
-                  ? <button onClick={deleteSongHandler.bind(this, song.fileName, mainStore, setCachedSongs)}>delete this song</button>
-                  : <button onClick={cacheSongHandler.bind(this, song.fileName, mainStore, setCachedSongs)}>save this song</button>
-                }
-              </div>
+
+              return song.deleted ? null :
+                < div key = { song.fileSlug } >
+                  <Song name={song.fileName} click={songClickHandler} />
+              {
+                cachedSongs.includes(song.fileName)
+                ? <button onClick={deleteSongHandler.bind(this, song.fileName, mainStore, setCachedSongs)}>delete this song</button>
+                : <button onClick={cacheSongHandler.bind(this, song.fileName, mainStore, setCachedSongs)}>save this song</button>
+              }
+                </div>
           })}
-        </div>
-        {onlineAudio}
       </div>
+        { onlineAudio }
+      </div >
     )
   }
 }
